@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import {
   Lightbulb,
@@ -93,19 +92,19 @@ export function StageSkills({ project, skills }: StageSkillsProps) {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <Card size="sm">
+        <Card size="sm" className="aurora-card border-0">
           <CardContent>
             <div className="grid gap-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Habilidades estudadas</span>
-                <span className="text-sm text-muted-foreground tabular-nums">
+                <span className="text-sm font-medium" style={{ color: "#344050" }}>Habilidades estudadas</span>
+                <span className="text-sm tabular-nums" style={{ color: "#5E6E82" }}>
                   {markedCount} de {totalCount}
                 </span>
               </div>
-              <div className="relative h-2 w-full overflow-hidden rounded-full bg-muted">
+              <div className="relative h-2 w-full overflow-hidden rounded-full" style={{ backgroundColor: "#EDF2F9" }}>
                 <div
-                  className="h-full bg-primary transition-all duration-300"
-                  style={{ width: `${progressValue}%` }}
+                  className="h-full transition-all duration-300"
+                  style={{ width: `${progressValue}%`, backgroundColor: "#2C7BE5" }}
                 />
               </div>
             </div>
@@ -132,13 +131,14 @@ export function StageSkills({ project, skills }: StageSkillsProps) {
             >
               <Card
                 className={cn(
-                  "relative transition-all",
-                  isMarked && "ring-2 ring-success/50 bg-success/5"
+                  "aurora-card relative border-0 transition-all",
+                  isMarked && "ring-2 ring-[#00D27A]/50"
                 )}
+                style={isMarked ? { backgroundColor: "rgba(0, 210, 122, 0.04)" } : undefined}
               >
                 {/* Checkmark overlay */}
                 {isMarked && (
-                  <div className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-success text-white">
+                  <div className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full text-white" style={{ backgroundColor: "#00D27A" }}>
                     <Check className="h-3.5 w-3.5" />
                   </div>
                 )}
@@ -147,32 +147,29 @@ export function StageSkills({ project, skills }: StageSkillsProps) {
                   <div className="flex items-center gap-2">
                     {IconComponent && (
                       <div
-                        className={cn(
-                          "flex h-8 w-8 items-center justify-center rounded-lg",
-                          isMarked ? "bg-success/10" : "bg-primary/10"
-                        )}
+                        className="flex h-8 w-8 items-center justify-center rounded-md"
+                        style={{
+                          backgroundColor: isMarked ? "rgba(0, 210, 122, 0.1)" : "rgba(44, 123, 229, 0.1)",
+                        }}
                       >
                         <IconComponent
-                          className={cn(
-                            "h-4 w-4",
-                            isMarked ? "text-success" : "text-primary"
-                          )}
+                          className={`h-4 w-4 ${isMarked ? "text-[#00D27A]" : "text-[#2C7BE5]"}`}
                         />
                       </div>
                     )}
-                    <CardTitle className="text-sm">{skill.name}</CardTitle>
+                    <CardTitle className="text-sm" style={{ color: "#344050" }}>{skill.name}</CardTitle>
                   </div>
                 </CardHeader>
 
                 <CardContent className="grid gap-3">
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <p className="text-xs leading-relaxed" style={{ color: "#5E6E82" }}>
                     {skill.description}
                   </p>
 
                   {synonyms.length > 0 && (
                     <div className="flex flex-wrap gap-1">
                       {synonyms.map((syn) => (
-                        <Badge key={syn} variant="secondary" className="text-[10px]">
+                        <Badge key={syn} variant="secondary" className="text-[10px]" style={{ backgroundColor: "#EDF2F9", color: "#5E6E82" }}>
                           {syn}
                         </Badge>
                       ))}
@@ -180,7 +177,7 @@ export function StageSkills({ project, skills }: StageSkillsProps) {
                   )}
 
                   {skill.examples && (
-                    <p className="text-[11px] text-muted-foreground/70 leading-relaxed">
+                    <p className="text-[11px] leading-relaxed" style={{ color: "#9DA9BB" }}>
                       {skill.examples}
                     </p>
                   )}
@@ -192,9 +189,9 @@ export function StageSkills({ project, skills }: StageSkillsProps) {
                     disabled={isToggling}
                     className={cn(
                       "w-full",
-                      isMarked &&
-                        "border-success/50 text-success hover:bg-success/10"
+                      isMarked && "border-[#00D27A]/50 text-[#00D27A] hover:bg-[#00D27A]/10"
                     )}
+                    style={!isMarked ? { backgroundColor: "#2C7BE5", color: "#FFFFFF" } : undefined}
                   >
                     {isToggling ? (
                       <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -220,10 +217,10 @@ export function StageSkills({ project, skills }: StageSkillsProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <Card className="border-accent/30 bg-accent/5">
+        <Card className="border-0" style={{ backgroundColor: "rgba(245, 128, 62, 0.06)", borderLeft: "3px solid #F5803E" }}>
           <CardContent className="flex items-start gap-3 pt-4">
-            <Lightbulb className="h-4 w-4 shrink-0 text-accent mt-0.5" />
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <Lightbulb className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#F5803E" }} />
+            <p className="text-sm leading-relaxed" style={{ color: "#5E6E82" }}>
               Voce nao precisa marcar todas, apenas as que voce realmente
               entendeu o conceito. Concentre-se em compreender como cada
               habilidade funciona na pratica.

@@ -26,8 +26,23 @@ import {
   PieChart,
   ThumbsUp,
   Trophy,
+  Search,
+  Fingerprint,
+  Gauge,
+  TrendingUp,
+  ArrowUpDown,
+  Wand2,
+  Activity,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+  Github,
+  Linkedin,
+  Youtube,
 } from "lucide-react";
 import { GlowyWavesHero } from "@/components/ui/glowy-waves-hero";
+import { AbstractionSankey } from "@/components/ui/abstraction-sankey";
 
 /* ------------------------------------------------------------------ */
 /*  Animation helpers                                                  */
@@ -59,81 +74,126 @@ const scaleIn: Variants = {
 /*  Data                                                               */
 /* ------------------------------------------------------------------ */
 
+const SKILLS_PREVIEW = [
+  {
+    icon: Search,
+    name: "Detectar",
+    desc: "Identificar presenca ou existencia de algo no ambiente.",
+    color: "bg-blue-100 text-blue-600",
+    synonyms: ["Sense", "Spot", "Notice"],
+  },
+  {
+    icon: Fingerprint,
+    name: "Identificar",
+    desc: "Reconhecer e classificar entidades especificas.",
+    color: "bg-purple-100 text-purple-600",
+    synonyms: ["Recognize", "Classify", "Label"],
+  },
+  {
+    icon: TrendingUp,
+    name: "Prever",
+    desc: "Antecipar eventos ou resultados futuros com base em padroes.",
+    color: "bg-teal-100 text-teal-600",
+    synonyms: ["Forecast", "Anticipate", "Project"],
+  },
+  {
+    icon: Wand2,
+    name: "Gerar",
+    desc: "Criar conteudo, artefatos ou saidas novas a partir de dados.",
+    color: "bg-emerald-100 text-emerald-600",
+    synonyms: ["Create", "Produce", "Synthesize"],
+  },
+  {
+    icon: Sparkles,
+    name: "Descobrir",
+    desc: "Revelar padroes ocultos, relacoes e insights em dados.",
+    color: "bg-indigo-100 text-indigo-600",
+    synonyms: ["Uncover", "Mine", "Extract"],
+  },
+  {
+    icon: ThumbsUp,
+    name: "Recomendar",
+    desc: "Sugerir opcoes personalizadas e relevantes para o usuario.",
+    color: "bg-orange-100 text-orange-600",
+    synonyms: ["Suggest", "Curate", "Advise"],
+  },
+];
+
+const EXAMPLES_PREVIEW = [
+  {
+    domain: "Saude",
+    title: "Analise de Imagens Medicas",
+    desc: "IA que detecta anomalias em raio-X e ressonancia, identificando tumores com precisao superior a radiologistas.",
+    capabilities: ["detectar", "identificar", "estimar"],
+  },
+  {
+    domain: "Financas",
+    title: "Trading Algoritmico",
+    desc: "Sistema que preve picos de preco de acoes e descobre correlacoes entre noticias e mercado financeiro.",
+    capabilities: ["prever", "descobrir"],
+  },
+  {
+    domain: "Transporte",
+    title: "Estacionamento Autonomo",
+    desc: "Veiculo que detecta vagas, estima espacos e gera trajetoria para estacionar automaticamente.",
+    capabilities: ["detectar", "estimar", "gerar", "agir"],
+  },
+  {
+    domain: "Educacao",
+    title: "Tutor Inteligente",
+    desc: "Plataforma que identifica gaps de conhecimento e recomenda conteudo personalizado para cada aluno.",
+    capabilities: ["identificar", "recomendar", "estimar"],
+  },
+  {
+    domain: "Varejo",
+    title: "Recomendacao de Produtos",
+    desc: "Engine que descobre preferencias de compra e sugere produtos com base no historico e contexto.",
+    capabilities: ["descobrir", "recomendar", "comparar"],
+  },
+  {
+    domain: "Seguranca",
+    title: "Monitoramento por Video",
+    desc: "Sistema de vigilancia que detecta atividades suspeitas e identifica individuos em tempo real.",
+    capabilities: ["detectar", "identificar", "monitorar"],
+  },
+];
+
 const STEPS = [
   {
     num: 1,
     icon: FileText,
     title: "Definir Projeto",
     desc: "Defina dominio, usuario-alvo e problemas reais. O contexto aparece fixo durante todo o fluxo.",
-    color: "from-violet-500 to-purple-600",
   },
   {
     num: 2,
     icon: Brain,
     title: "Estudar Habilidades de IA",
-    desc: "10 cards de habilidades: Detectar, Identificar, Estimar, Prever, Comparar, Descobrir, Gerar, Agir. Marque as que voce entendeu.",
-    color: "from-purple-500 to-indigo-600",
+    desc: "10 cards de habilidades: Detectar, Identificar, Estimar, Prever, Comparar, Descobrir, Gerar, Agir.",
   },
   {
     num: 3,
     icon: LayoutGrid,
     title: "Navegar 40 Exemplos",
-    desc: "Galeria de 40 exemplos reais de IA em 14 dominios. Filtre por dominio e por habilidade. Descubra analogias inesperadas.",
-    color: "from-indigo-500 to-blue-600",
+    desc: "Galeria de 40 exemplos reais de IA em 14 dominios. Filtre por dominio e por habilidade.",
   },
   {
     num: 4,
     icon: GitBranch,
     title: "Niveis de Abstracao",
-    desc: "Visualize como capabilities especificas se abstraem em padroes reutilizaveis entre dominios diferentes.",
-    color: "from-blue-500 to-cyan-600",
+    desc: "Visualize como capabilities especificas se abstraem em padroes reutilizaveis.",
   },
   {
     num: 5,
     icon: Layers,
     title: "Montar o Deck",
-    desc: "Selecione 10-15 exemplos para seu deck de inspiracao. Um indicador mostra a cobertura das 10 habilidades.",
-    color: "from-cyan-500 to-teal-600",
+    desc: "Selecione 10-15 exemplos para seu deck de inspiracao. Veja a cobertura das 10 habilidades.",
   },
   {
     num: 6,
     icon: Lightbulb,
     title: "Gerar Ideias",
-    desc: "Board de post-its para criar conceitos. Combine problema + deck + habilidades de IA. Vote com joinha para priorizar.",
-    color: "from-teal-500 to-emerald-600",
-  },
-];
-
-const FEATURES = [
-  {
-    icon: Brain,
-    title: "Catalogo de 10 Habilidades de IA",
-    desc: "Detectar, Identificar, Estimar, Prever, Comparar, Descobrir, Gerar, Agir, Monitorar, Recomendar — com definicoes, sinonimos e exemplos praticos.",
-  },
-  {
-    icon: LayoutGrid,
-    title: "40 Exemplos em 14 Dominios",
-    desc: "De monitoramento de vida selvagem a chatbots de RH. Cada exemplo detalha quais capacidades de IA utiliza.",
-  },
-  {
-    icon: Filter,
-    title: "Filtros Inteligentes",
-    desc: "Filtre exemplos por dominio ou por habilidade. Clique em uma capability para ver todos os exemplos que a compartilham.",
-  },
-  {
-    icon: PieChart,
-    title: "Indicador de Cobertura",
-    desc: "Ao montar seu deck, veja quais das 10 habilidades estao cobertas e quais faltam — como um checklist visual.",
-  },
-  {
-    icon: ThumbsUp,
-    title: "Board de Ideias com Votacao",
-    desc: "Crie conceitos como post-its. Cada ideia descreve quais habilidades de IA usaria. Vote com joinha para priorizar.",
-  },
-  {
-    icon: BookOpen,
-    title: "Baseado em Pesquisa Academica",
-    desc: "Metodologia do paper 'Creating Design Resources to Scaffold the Ideation of AI Concepts' (DIS 2023, CMU).",
+    desc: "Board de post-its para criar conceitos. Combine problema + deck + habilidades de IA.",
   },
 ];
 
@@ -141,27 +201,40 @@ const PERSONAS = [
   {
     icon: Trophy,
     title: "Product Managers",
-    desc: "Priorize features de IA com base em capacidades reais, nao em hype.",
+    desc: "Priorize features de IA com base em capacidades reais, nao em hype. Saia da reuniao com conceitos fundamentados.",
   },
   {
     icon: Palette,
     title: "UX Designers",
-    desc: "Entenda o que a IA pode fazer antes de desenhar interfaces.",
+    desc: "Entenda o que a IA pode fazer antes de desenhar interfaces. Conecte necessidades do usuario com tecnologia.",
   },
   {
     icon: GraduationCap,
     title: "Professores e Facilitadores",
-    desc: "Guie workshops de ideacao de IA com uma metodologia validada.",
+    desc: "Guie workshops de ideacao de IA com uma metodologia validada por pesquisa academica da CMU.",
   },
   {
     icon: Rocket,
     title: "Times de Inovacao",
-    desc: "Saia da reuniao com conceitos priorizados e fundamentados.",
+    desc: "Saia da reuniao com conceitos priorizados, votados e fundamentados em capacidades reais de IA.",
   },
 ];
 
+const CAPABILITY_COLORS: Record<string, string> = {
+  detectar: "bg-blue-100 text-blue-700",
+  identificar: "bg-purple-100 text-purple-700",
+  estimar: "bg-amber-100 text-amber-700",
+  prever: "bg-teal-100 text-teal-700",
+  comparar: "bg-pink-100 text-pink-700",
+  descobrir: "bg-indigo-100 text-indigo-700",
+  gerar: "bg-emerald-100 text-emerald-700",
+  agir: "bg-red-100 text-red-700",
+  monitorar: "bg-cyan-100 text-cyan-700",
+  recomendar: "bg-orange-100 text-orange-700",
+};
+
 /* ------------------------------------------------------------------ */
-/*  Components                                                         */
+/*  Header (dSign style)                                                */
 /* ------------------------------------------------------------------ */
 
 function Header() {
@@ -175,53 +248,59 @@ function Header() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 z-50 w-full font-poppins transition-all duration-300 ${
         scrolled
-          ? "border-b border-border bg-card/80 backdrop-blur-md shadow-sm"
+          ? "bg-white shadow-lg shadow-black/5"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <Sparkles className="h-5 w-5 text-primary-foreground" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0075FF]">
+            <Sparkles className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-foreground">
+          <span className="text-xl font-bold tracking-tight text-[#002834]">
             Ranked
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-8 md:flex">
           <a
             href="#como-funciona"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="text-sm font-medium text-[#7D82A1] transition-colors hover:text-[#002834]"
           >
             Como funciona
           </a>
           <a
-            href="#features"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            href="#habilidades"
+            className="text-sm font-medium text-[#7D82A1] transition-colors hover:text-[#002834]"
           >
-            Features
+            Habilidades
           </a>
           <a
-            href="#pricing"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            href="#exemplos"
+            className="text-sm font-medium text-[#7D82A1] transition-colors hover:text-[#002834]"
+          >
+            Exemplos
+          </a>
+          <a
+            href="#precos"
+            className="text-sm font-medium text-[#7D82A1] transition-colors hover:text-[#002834]"
           >
             Precos
           </a>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <Link
             href="/login"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="text-sm font-medium text-[#7D82A1] transition-colors hover:text-[#002834]"
           >
             Entrar
           </Link>
           <Link
             href="/login"
-            className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25"
+            className="leafbutton bg-[#0075FF] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#0063d9] hover:shadow-lg hover:shadow-[#0075FF]/25"
           >
             Comecar gratis
           </Link>
@@ -232,252 +311,38 @@ function Header() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section: Hero                                                      */
+/*  Stats Section (dSign stats bar)                                     */
 /* ------------------------------------------------------------------ */
 
-function HeroSection() {
+function StatsSection() {
+  const stats = [
+    { value: "85%", label: "Projetos de IA que falham" },
+    { value: "40", label: "Exemplos reais em 14 dominios" },
+    { value: "10", label: "Habilidades de IA mapeadas" },
+    { value: "6", label: "Etapas do Kanban" },
+  ];
+
   return (
-    <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
-      {/* Background gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/5 via-primary/[0.02] to-background" />
-      <div className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] rounded-full bg-primary/5 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-[400px] w-[400px] rounded-full bg-accent/5 blur-3xl" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="mx-auto max-w-4xl text-center"
-        >
-          {/* Badge */}
-          <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            <Sparkles className="h-4 w-4" />
-            Baseado no AI Design Kit — Carnegie Mellon University
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            variants={fadeUp}
-            className="mb-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl"
-          >
-            Transforme ideias em{" "}
-            <span className="bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
-              produtos de IA
-            </span>
-          </motion.h1>
-
-          {/* Sub-headline */}
-          <motion.p
-            variants={fadeUp}
-            className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground sm:text-xl"
-          >
-            O Kanban de 6 etapas baseado na pesquisa do AI Design Kit da Carnegie
-            Mellon University que guia voce da ideia ao conceito de produto.
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
-          >
-            <Link
-              href="/login"
-              className="group inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30"
-            >
-              Comecar agora — e gratis
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <a
-              href="#como-funciona"
-              className="group inline-flex items-center gap-2 rounded-xl border border-border bg-card px-8 py-3.5 text-base font-semibold text-foreground transition-all hover:border-primary/30 hover:bg-primary/5"
-            >
-              Ver como funciona
-              <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-            </a>
-          </motion.div>
-        </motion.div>
-
-        {/* Visual: 6 Kanban stages */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08, delayChildren: 0.4 } } }}
-          className="mx-auto mt-16 max-w-5xl"
-        >
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            {STEPS.map((step) => (
-              <motion.div
-                key={step.num}
-                variants={{
-                  hidden: { opacity: 0, y: 20, scale: 0.95 },
-                  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4 } },
-                }}
-                className="group relative overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
-              >
-                <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${step.color} text-white shadow-sm`}>
-                  <step.icon className="h-5 w-5" />
-                </div>
-                <div className="mb-1 text-xs font-semibold text-primary/60">
-                  Etapa {step.num}
-                </div>
-                <div className="text-sm font-semibold text-foreground leading-tight">
-                  {step.title}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Connecting line under the cards */}
-          <div className="mt-4 hidden items-center justify-center lg:flex">
-            <div className="h-0.5 w-full max-w-4xl rounded-full bg-gradient-to-r from-violet-500 via-blue-500 to-emerald-500 opacity-30" />
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Section: Problem                                                   */
-/* ------------------------------------------------------------------ */
-
-function ProblemSection() {
-  return (
-    <section className="relative py-20 sm:py-28">
+    <section className="relative py-16 font-poppins">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mx-auto max-w-4xl text-center"
-        >
-          <motion.div
-            variants={fadeUp}
-            className="mb-12"
-          >
-            <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl">
-              <span className="text-alert">85%</span> dos projetos de IA{" "}
-              <span className="text-alert">falham</span> antes do deploy
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Times escolhem os problemas errados para resolver. Falta um processo
-              estruturado que combine necessidades do usuario com capacidades reais
-              de IA.
-            </p>
-          </motion.div>
-
-          {/* Stat cards */}
-          <motion.div
-            variants={staggerContainer}
-            className="grid gap-4 sm:grid-cols-3"
-          >
-            {[
-              { stat: "85%", label: "dos projetos de IA falham", accent: "text-alert" },
-              { stat: "70%", label: "nao passam do piloto", accent: "text-accent" },
-              { stat: "6 etapas", label: "para mudar essa realidade", accent: "text-primary" },
-            ].map((item) => (
-              <motion.div
-                key={item.label}
-                variants={scaleIn}
-                className="rounded-xl border border-border bg-card p-6 shadow-sm"
-              >
-                <div className={`mb-2 text-3xl font-extrabold ${item.accent}`}>
-                  {item.stat}
-                </div>
-                <div className="text-sm text-muted-foreground">{item.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <motion.p
-            variants={fadeUp}
-            className="mt-8 text-xs text-muted-foreground/70"
-          >
-            Pesquisa do Human-Computer Interaction Institute — Carnegie Mellon
-            University
-          </motion.p>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Section: Como Funciona (6 Steps)                                   */
-/* ------------------------------------------------------------------ */
-
-function StepsSection() {
-  return (
-    <section id="como-funciona" className="relative scroll-mt-20 py-20 sm:py-28">
-      {/* Background */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-primary/[0.02] to-background" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mb-16 text-center"
-        >
-          <motion.div variants={fadeUp} className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            <Zap className="h-4 w-4" />
-            Metodologia validada
-          </motion.div>
-          <motion.h2
-            variants={fadeUp}
-            className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl"
-          >
-            6 etapas do problema a ideia validada
-          </motion.h2>
-          <motion.p variants={fadeUp} className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Cada etapa foi desenhada para expandir seu repertorio sobre IA e gerar
-            conceitos fundamentados.
-          </motion.p>
-        </motion.div>
-
-        {/* Steps grid */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          variants={staggerContainer}
+          className="grid grid-cols-2 gap-6 sm:grid-cols-4"
         >
-          {STEPS.map((step) => (
+          {stats.map((stat) => (
             <motion.div
-              key={step.num}
-              variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
-              }}
-              whileHover={{ y: -4 }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-lg"
+              key={stat.label}
+              variants={fadeUp}
+              className="text-center"
             >
-              {/* Step number background */}
-              <div className="pointer-events-none absolute -right-4 -top-4 text-[80px] font-extrabold leading-none text-primary/[0.04]">
-                {step.num}
+              <div className="mb-2 text-4xl font-extrabold text-[#002834] sm:text-5xl">
+                {stat.value}
               </div>
-
-              <div className="relative">
-                {/* Icon & number */}
-                <div className="mb-4 flex items-center gap-3">
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${step.color} text-white shadow-md`}>
-                    <step.icon className="h-6 w-6" />
-                  </div>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
-                    {step.num}
-                  </div>
-                </div>
-
-                <h3 className="mb-2 text-lg font-bold text-foreground">
-                  {step.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {step.desc}
-                </p>
+              <div className="text-sm font-medium text-[#7D82A1]">
+                {stat.label}
               </div>
             </motion.div>
           ))}
@@ -488,14 +353,104 @@ function StepsSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section: Features                                                  */
+/*  Skills Section (dSign services style)                               */
 /* ------------------------------------------------------------------ */
 
-function FeaturesSection() {
+function SkillsSection() {
   return (
-    <section id="features" className="relative scroll-mt-20 py-20 sm:py-28">
-      <div className="pointer-events-none absolute inset-0 bg-muted/30" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="habilidades" className="relative scroll-mt-20 py-20 font-poppins sm:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-start gap-12 lg:grid-cols-5">
+          {/* Left column: text */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="lg:col-span-2"
+          >
+            <motion.div
+              variants={fadeUp}
+              className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#0075FF]/10 px-4 py-1.5 text-sm font-medium text-[#0075FF]"
+            >
+              <Brain className="h-4 w-4" />
+              Catalogo de IA
+            </motion.div>
+            <motion.h2
+              variants={fadeUp}
+              className="mb-4 text-3xl font-extrabold tracking-tight text-[#002834] sm:text-4xl"
+            >
+              As 10 Habilidades de IA
+            </motion.h2>
+            <motion.p variants={fadeUp} className="mb-8 text-base leading-relaxed text-[#7D82A1]">
+              Cada habilidade representa uma capacidade fundamental da
+              Inteligencia Artificial. Entenda o que a IA pode realmente fazer
+              antes de propor solucoes.
+            </motion.p>
+            <motion.div variants={fadeUp}>
+              <a
+                href="#exemplos"
+                className="leafbutton inline-flex items-center gap-2 bg-[#0075FF] px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-[#0063d9] hover:shadow-lg hover:shadow-[#0075FF]/25"
+              >
+                Explorar todas
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </motion.div>
+          </motion.div>
+
+          {/* Right column: skill cards grid */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+            className="grid gap-5 sm:grid-cols-2 lg:col-span-3"
+          >
+            {SKILLS_PREVIEW.map((skill) => (
+              <motion.div
+                key={skill.name}
+                variants={scaleIn}
+                whileHover={{ y: -4 }}
+                className="rounded-3xl bg-white p-6 shadow-xl transition-all hover:shadow-2xl"
+              >
+                <div
+                  className={`mb-4 flex h-14 w-14 items-center justify-center rounded-full ${skill.color}`}
+                >
+                  <skill.icon className="h-6 w-6" />
+                </div>
+                <h3 className="mb-2 text-lg font-bold text-[#002834]">
+                  {skill.name}
+                </h3>
+                <p className="mb-3 text-sm leading-relaxed text-[#7D82A1]">
+                  {skill.desc}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {skill.synonyms.map((syn) => (
+                    <span
+                      key={syn}
+                      className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[10px] font-medium text-[#7D82A1]"
+                    >
+                      {syn}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Examples Section                                                    */
+/* ------------------------------------------------------------------ */
+
+function ExamplesSection() {
+  return (
+    <section id="exemplos" className="relative scroll-mt-20 bg-[#FAFAFE] py-20 font-poppins sm:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -503,16 +458,23 @@ function FeaturesSection() {
           variants={staggerContainer}
           className="mb-16 text-center"
         >
-          <motion.div variants={fadeUp} className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent">
-            <Star className="h-4 w-4" />
-            Features
+          <motion.div
+            variants={fadeUp}
+            className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#F97316]/10 px-4 py-1.5 text-sm font-medium text-[#F97316]"
+          >
+            <LayoutGrid className="h-4 w-4" />
+            Galeria de Exemplos
           </motion.div>
           <motion.h2
             variants={fadeUp}
-            className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl"
+            className="mb-4 text-3xl font-extrabold tracking-tight text-[#002834] sm:text-4xl md:text-5xl"
           >
-            Tudo que voce precisa para idear com IA
+            40 Exemplos em 14 Dominios
           </motion.h2>
+          <motion.p variants={fadeUp} className="mx-auto max-w-2xl text-base text-[#7D82A1]">
+            De monitoramento de vida selvagem a chatbots de RH. Cada exemplo
+            detalha quais capacidades de IA utiliza e como.
+          </motion.p>
         </motion.div>
 
         <motion.div
@@ -522,24 +484,52 @@ function FeaturesSection() {
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {FEATURES.map((feature) => (
+          {EXAMPLES_PREVIEW.map((example) => (
             <motion.div
-              key={feature.title}
+              key={example.title}
               variants={scaleIn}
-              whileHover={{ y: -4 }}
-              className="group rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-lg"
+              whileHover={{ y: -6 }}
+              className="rounded-3xl bg-white p-6 shadow-xl transition-all hover:shadow-2xl"
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                <feature.icon className="h-6 w-6" />
-              </div>
-              <h3 className="mb-2 text-base font-bold text-foreground">
-                {feature.title}
+              <span className="mb-4 inline-block rounded-full bg-[#E2F3F9] px-3 py-1 text-xs font-semibold text-[#183B56]">
+                {example.domain}
+              </span>
+              <h3 className="mb-2 text-lg font-bold text-[#002834]">
+                {example.title}
               </h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {feature.desc}
+              <p className="mb-4 text-sm leading-relaxed text-[#7D82A1]">
+                {example.desc}
               </p>
+              <div className="flex flex-wrap gap-1.5">
+                {example.capabilities.map((cap) => (
+                  <span
+                    key={cap}
+                    className={`rounded-full px-2.5 py-0.5 text-[10px] font-medium ${
+                      CAPABILITY_COLORS[cap] || "bg-gray-100 text-gray-700"
+                    }`}
+                  >
+                    {cap}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="mt-12 text-center"
+        >
+          <Link
+            href="/login"
+            className="leafbutton inline-flex items-center gap-2 bg-[#0075FF] px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-[#0063d9] hover:shadow-lg hover:shadow-[#0075FF]/25"
+          >
+            Ver todos os 40 exemplos
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </motion.div>
       </div>
     </section>
@@ -547,12 +537,163 @@ function FeaturesSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section: Para Quem                                                 */
+/*  Abstraction Section                                                 */
+/* ------------------------------------------------------------------ */
+
+function AbstractionSection() {
+  return (
+    <section className="relative py-20 font-poppins sm:py-28" style={{ backgroundColor: "#E2F3F9" }}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="mb-12 text-center"
+        >
+          <motion.div
+            variants={fadeUp}
+            className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/60 px-4 py-1.5 text-sm font-medium text-[#7C3AED]"
+          >
+            <GitBranch className="h-4 w-4" />
+            Niveis de Abstracao
+          </motion.div>
+          <motion.h2
+            variants={fadeUp}
+            className="mb-4 text-3xl font-extrabold tracking-tight text-[#002834] sm:text-4xl md:text-5xl"
+          >
+            Como as Habilidades se Conectam
+          </motion.h2>
+          <motion.p variants={fadeUp} className="mx-auto max-w-2xl text-base text-[#7D82A1]">
+            Visualize como capacidades especificas de IA se abstraem em padroes
+            reutilizaveis entre dominios totalmente diferentes. E aqui que a
+            inovacao acontece.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <AbstractionSankey />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  How It Works — 6 Etapas do Kanban (dSign "why we best" style)       */
+/* ------------------------------------------------------------------ */
+
+function HowItWorksSection() {
+  return (
+    <section id="como-funciona" className="relative scroll-mt-20 py-20 font-poppins sm:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-start gap-16 lg:grid-cols-2">
+          {/* Left: illustration / visual */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="relative"
+          >
+            <motion.div
+              variants={fadeUp}
+              className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#0075FF]/10 px-4 py-1.5 text-sm font-medium text-[#0075FF]"
+            >
+              <Zap className="h-4 w-4" />
+              Metodologia validada
+            </motion.div>
+            <motion.h2
+              variants={fadeUp}
+              className="mb-4 text-3xl font-extrabold tracking-tight text-[#002834] sm:text-4xl"
+            >
+              6 Etapas do Kanban
+            </motion.h2>
+            <motion.p variants={fadeUp} className="mb-8 text-base leading-relaxed text-[#7D82A1]">
+              Cada etapa foi desenhada para expandir seu repertorio sobre IA e
+              gerar conceitos fundamentados. Do problema a ideia validada em 6
+              passos claros.
+            </motion.p>
+
+            {/* Visual: 6 step mini-cards */}
+            <motion.div
+              variants={staggerContainer}
+              className="grid grid-cols-2 gap-3 sm:grid-cols-3"
+            >
+              {STEPS.map((step) => (
+                <motion.div
+                  key={step.num}
+                  variants={scaleIn}
+                  className="flex items-center gap-2 rounded-2xl bg-white p-3 shadow-md"
+                >
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0075FF]/10 text-[#0075FF]">
+                    <step.icon className="h-4 w-4" />
+                  </div>
+                  <span className="text-xs font-semibold text-[#002834] leading-tight">
+                    {step.title}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* Right: steps list */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+            className="space-y-6"
+          >
+            {STEPS.map((step) => (
+              <motion.div
+                key={step.num}
+                variants={fadeUp}
+                className="flex gap-4"
+              >
+                {/* Number + check circle */}
+                <div className="flex flex-col items-center">
+                  <div className="circlebg flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+                    <Check className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  {step.num < 6 && (
+                    <div className="mt-2 h-full w-px bg-gray-200" />
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="pb-6">
+                  <div className="mb-1 text-xs font-semibold text-[#0075FF]">
+                    Etapa {step.num}
+                  </div>
+                  <h3 className="mb-1 text-lg font-bold text-[#002834]">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-[#7D82A1]">
+                    {step.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Personas Section                                                    */
 /* ------------------------------------------------------------------ */
 
 function PersonasSection() {
   return (
-    <section className="relative py-20 sm:py-28">
+    <section className="relative py-20 font-poppins sm:py-28" style={{ backgroundColor: "#FAFAFE" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -561,16 +702,23 @@ function PersonasSection() {
           variants={staggerContainer}
           className="mb-16 text-center"
         >
-          <motion.div variants={fadeUp} className="mb-4 inline-flex items-center gap-2 rounded-full bg-success/10 px-4 py-1.5 text-sm font-medium text-success">
+          <motion.div
+            variants={fadeUp}
+            className="mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-medium text-emerald-700"
+          >
             <Users className="h-4 w-4" />
             Publico
           </motion.div>
           <motion.h2
             variants={fadeUp}
-            className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl"
+            className="mb-4 text-3xl font-extrabold tracking-tight text-[#002834] sm:text-4xl md:text-5xl"
           >
-            Para quem e o Ranked?
+            Para Quem
           </motion.h2>
+          <motion.p variants={fadeUp} className="mx-auto max-w-xl text-base text-[#7D82A1]">
+            O Ranked e para qualquer pessoa que queira transformar capacidades
+            reais de IA em solucoes que resolvem problemas reais.
+          </motion.p>
         </motion.div>
 
         <motion.div
@@ -584,16 +732,16 @@ function PersonasSection() {
             <motion.div
               key={persona.title}
               variants={scaleIn}
-              whileHover={{ y: -4 }}
-              className="group rounded-2xl border border-border bg-card p-6 text-center shadow-sm transition-all hover:border-primary/20 hover:shadow-lg"
+              whileHover={{ y: -6 }}
+              className="rounded-3xl bg-white p-6 text-center shadow-xl transition-all hover:shadow-2xl"
             >
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 text-primary transition-all group-hover:from-primary group-hover:to-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/25">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#0075FF]/10 text-[#0075FF]">
                 <persona.icon className="h-7 w-7" />
               </div>
-              <h3 className="mb-2 text-base font-bold text-foreground">
+              <h3 className="mb-2 text-lg font-bold text-[#002834]">
                 {persona.title}
               </h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <p className="text-sm leading-relaxed text-[#7D82A1]">
                 {persona.desc}
               </p>
             </motion.div>
@@ -605,15 +753,13 @@ function PersonasSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section: Pricing                                                   */
+/*  Pricing Section                                                     */
 /* ------------------------------------------------------------------ */
 
 function PricingSection() {
   return (
-    <section id="pricing" className="relative scroll-mt-20 py-20 sm:py-28">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-primary/[0.02] to-background" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="precos" className="relative scroll-mt-20 py-20 font-poppins sm:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -623,11 +769,11 @@ function PricingSection() {
         >
           <motion.h2
             variants={fadeUp}
-            className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl"
+            className="mb-4 text-3xl font-extrabold tracking-tight text-[#002834] sm:text-4xl md:text-5xl"
           >
             Simples e acessivel
           </motion.h2>
-          <motion.p variants={fadeUp} className="mx-auto max-w-xl text-lg text-muted-foreground">
+          <motion.p variants={fadeUp} className="mx-auto max-w-xl text-base text-[#7D82A1]">
             Comece gratis e evolua quando precisar.
           </motion.p>
         </motion.div>
@@ -642,15 +788,15 @@ function PricingSection() {
           {/* Free plan */}
           <motion.div
             variants={scaleIn}
-            className="rounded-2xl border border-border bg-card p-8 shadow-sm"
+            className="rounded-3xl bg-white p-8 shadow-xl"
           >
             <div className="mb-6">
-              <h3 className="mb-1 text-xl font-bold text-foreground">Gratis</h3>
-              <p className="text-sm text-muted-foreground">Ideal para explorar a metodologia</p>
+              <h3 className="mb-1 text-xl font-bold text-[#002834]">Gratis</h3>
+              <p className="text-sm text-[#7D82A1]">Ideal para explorar a metodologia</p>
             </div>
             <div className="mb-6">
-              <span className="text-4xl font-extrabold text-foreground">R$ 0</span>
-              <span className="text-muted-foreground">/mes</span>
+              <span className="text-4xl font-extrabold text-[#002834]">R$ 0</span>
+              <span className="text-[#7D82A1]">/mes</span>
             </div>
             <ul className="mb-8 space-y-3">
               {[
@@ -659,15 +805,15 @@ function PricingSection() {
                 "Todas as 6 etapas",
                 "40 exemplos de IA",
               ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                <li key={item} className="flex items-start gap-2 text-sm text-[#7D82A1]">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
                   {item}
                 </li>
               ))}
             </ul>
             <Link
               href="/login"
-              className="block rounded-xl border border-border px-6 py-3 text-center text-sm font-semibold text-foreground transition-all hover:border-primary/30 hover:bg-primary/5"
+              className="leafbutton block border-2 border-[#0075FF]/20 px-6 py-3 text-center text-sm font-semibold text-[#0075FF] transition-all hover:border-[#0075FF] hover:bg-[#0075FF]/5"
             >
               Comecar gratis
             </Link>
@@ -676,18 +822,18 @@ function PricingSection() {
           {/* Pro plan */}
           <motion.div
             variants={scaleIn}
-            className="relative rounded-2xl border-2 border-primary bg-card p-8 shadow-lg shadow-primary/10"
+            className="relative rounded-3xl border-2 border-[#0075FF] bg-white p-8 shadow-xl shadow-[#0075FF]/10"
           >
-            <div className="absolute -top-3 right-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
+            <div className="absolute -top-3 right-6 rounded-full bg-[#0075FF] px-3 py-1 text-xs font-semibold text-white">
               Popular
             </div>
             <div className="mb-6">
-              <h3 className="mb-1 text-xl font-bold text-foreground">PRO</h3>
-              <p className="text-sm text-muted-foreground">Para times que levam inovacao a serio</p>
+              <h3 className="mb-1 text-xl font-bold text-[#002834]">PRO</h3>
+              <p className="text-sm text-[#7D82A1]">Para times que levam inovacao a serio</p>
             </div>
             <div className="mb-6">
-              <span className="text-4xl font-extrabold text-foreground">R$ 29</span>
-              <span className="text-muted-foreground">/mes</span>
+              <span className="text-4xl font-extrabold text-[#002834]">R$ 29</span>
+              <span className="text-[#7D82A1]">/mes</span>
             </div>
             <ul className="mb-8 space-y-3">
               {[
@@ -697,15 +843,15 @@ function PricingSection() {
                 "Todas as 6 etapas",
                 "Suporte prioritario",
               ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <li key={item} className="flex items-start gap-2 text-sm text-[#7D82A1]">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#0075FF]" />
                   {item}
                 </li>
               ))}
             </ul>
             <Link
               href="/login"
-              className="block rounded-xl bg-primary px-6 py-3 text-center text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30"
+              className="leafbutton block bg-[#0075FF] px-6 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-[#0075FF]/25 transition-all hover:bg-[#0063d9] hover:shadow-xl hover:shadow-[#0075FF]/30"
             >
               Comecar gratis
             </Link>
@@ -717,43 +863,45 @@ function PricingSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section: CTA Final                                                 */
+/*  Newsletter / CTA Section                                            */
 /* ------------------------------------------------------------------ */
 
-function FinalCTASection() {
+function NewsletterSection() {
   return (
-    <section className="relative py-20 sm:py-28">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative py-20 font-poppins sm:py-28" style={{ backgroundColor: "#183B56" }}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="mx-auto max-w-3xl text-center"
+          className="mx-auto max-w-2xl text-center"
         >
-          <motion.div
-            variants={fadeUp}
-            className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10"
-          >
-            <Sparkles className="h-8 w-8 text-primary" />
-          </motion.div>
           <motion.h2
             variants={fadeUp}
-            className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl"
+            className="mb-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl"
           >
-            Pronto para transformar ideias em produtos de IA?
+            Pronto para comecar?
           </motion.h2>
-          <motion.p variants={fadeUp} className="mb-10 text-lg text-muted-foreground">
-            Comece gratis. Sem cartao de credito.
+          <motion.p variants={fadeUp} className="mb-10 text-base text-[#AEC7E4]">
+            Comece gratis. Sem cartao de credito. Transforme suas ideias em
+            produtos de IA com a metodologia da Carnegie Mellon University.
           </motion.p>
-          <motion.div variants={fadeUp}>
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+          >
+            <input
+              type="email"
+              placeholder="Seu melhor email"
+              className="w-full rounded-xl border border-white/20 bg-white/10 px-5 py-3 text-sm text-white placeholder-white/50 backdrop-blur-sm transition-all focus:border-[#0075FF] focus:outline-none focus:ring-2 focus:ring-[#0075FF]/50 sm:max-w-sm"
+            />
             <Link
               href="/login"
-              className="group inline-flex items-center gap-2 rounded-xl bg-primary px-10 py-4 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30"
+              className="leafbutton inline-flex w-full items-center justify-center gap-2 bg-[#0075FF] px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-[#0063d9] hover:shadow-lg hover:shadow-[#0075FF]/25 sm:w-auto"
             >
-              Comecar agora — e gratis
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              Comecar agora
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
         </motion.div>
@@ -763,43 +911,87 @@ function FinalCTASection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section: Footer                                                    */
+/*  Footer (dSign dark style)                                           */
 /* ------------------------------------------------------------------ */
 
 function Footer() {
+  const socialLinks = [
+    { icon: Twitter, href: "#", label: "Twitter" },
+    { icon: Github, href: "#", label: "GitHub" },
+    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    { icon: Youtube, href: "#", label: "YouTube" },
+  ];
+
   return (
-    <footer className="border-t border-border bg-card/50">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="font-poppins" style={{ backgroundColor: "#000321" }}>
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-1">
             <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-                <Sparkles className="h-5 w-5 text-primary-foreground" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0075FF]">
+                <Sparkles className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-foreground">
+              <span className="text-xl font-bold tracking-tight text-white">
                 Ranked
               </span>
             </div>
-            <p className="mb-4 max-w-sm text-sm text-muted-foreground">
+            <p className="mb-6 max-w-xs text-sm leading-relaxed text-[#AEC7E4]">
               Kanban de 6 etapas para idear produtos de IA. Baseado no AI Design
               Kit da Carnegie Mellon University.
             </p>
-            <p className="text-xs text-muted-foreground/70">
-              Traduzido e adaptado por Leandro Rezende — UX Unicornio
-            </p>
+            {/* Social icons */}
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="social-icon-hover flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[#AEC7E4] transition-colors hover:bg-[#0075FF] hover:text-white"
+                >
+                  <social.icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Links */}
+          {/* Produto */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-foreground">Recursos</h4>
-            <ul className="space-y-2">
+            <h4 className="mb-4 text-sm font-semibold text-white">Produto</h4>
+            <ul className="space-y-3">
+              <li>
+                <a href="#como-funciona" className="text-sm text-[#AEC7E4] transition-colors hover:text-white">
+                  Como funciona
+                </a>
+              </li>
+              <li>
+                <a href="#habilidades" className="text-sm text-[#AEC7E4] transition-colors hover:text-white">
+                  Habilidades
+                </a>
+              </li>
+              <li>
+                <a href="#exemplos" className="text-sm text-[#AEC7E4] transition-colors hover:text-white">
+                  Exemplos
+                </a>
+              </li>
+              <li>
+                <a href="#precos" className="text-sm text-[#AEC7E4] transition-colors hover:text-white">
+                  Precos
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Recursos */}
+          <div>
+            <h4 className="mb-4 text-sm font-semibold text-white">Recursos</h4>
+            <ul className="space-y-3">
               <li>
                 <a
                   href="https://doi.org/10.1145/3563657.3596058"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex items-center gap-1 text-sm text-[#AEC7E4] transition-colors hover:text-white"
                 >
                   Paper Original
                   <ExternalLink className="h-3 w-3" />
@@ -810,7 +1002,7 @@ function Footer() {
                   href="https://aidesignkit.github.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex items-center gap-1 text-sm text-[#AEC7E4] transition-colors hover:text-white"
                 >
                   AI Design Kit
                   <ExternalLink className="h-3 w-3" />
@@ -819,39 +1011,32 @@ function Footer() {
             </ul>
           </div>
 
+          {/* Legal / Contact */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-foreground">Produto</h4>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="#como-funciona"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Como funciona
-                </a>
+            <h4 className="mb-4 text-sm font-semibold text-white">Contato</h4>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-2 text-sm text-[#AEC7E4]">
+                <Mail className="h-4 w-4 text-[#90A3B4]" />
+                contato@ranked.app
               </li>
-              <li>
-                <a
-                  href="#features"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Features
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pricing"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Precos
-                </a>
+              <li className="flex items-center gap-2 text-sm text-[#AEC7E4]">
+                <MapPin className="h-4 w-4 text-[#90A3B4]" />
+                Brasil
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground/70">
-          Baseado no AI Design Kit da Carnegie Mellon University
+        {/* Bottom bar */}
+        <div className="mt-12 border-t border-white/10 pt-8">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+            <p className="text-xs text-[#90A3B4]">
+              Baseado no AI Design Kit — Carnegie Mellon University
+            </p>
+            <p className="text-xs text-[#90A3B4]">
+              Traduzido por Leandro Rezende — UX Unicornio
+            </p>
+          </div>
         </div>
       </div>
     </footer>
@@ -864,15 +1049,17 @@ function Footer() {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background" style={{ scrollBehavior: "smooth" }}>
+    <div className="min-h-screen bg-white font-poppins" style={{ scrollBehavior: "smooth" }}>
       <Header />
       <GlowyWavesHero />
-      <ProblemSection />
-      <StepsSection />
-      <FeaturesSection />
+      <StatsSection />
+      <SkillsSection />
+      <ExamplesSection />
+      <AbstractionSection />
+      <HowItWorksSection />
       <PersonasSection />
       <PricingSection />
-      <FinalCTASection />
+      <NewsletterSection />
       <Footer />
     </div>
   );

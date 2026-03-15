@@ -63,12 +63,12 @@ export function StageDefine({ project }: StageDefineProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card>
+          <Card className="aurora-card border-0">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle>Informacoes do Projeto</CardTitle>
+                <CardTitle style={{ color: "#344050" }}>Informacoes do Projeto</CardTitle>
                 {saving && (
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1.5 text-xs" style={{ color: "#5E6E82" }}>
                     <Loader2 className="h-3 w-3 animate-spin" />
                     Salvando...
                   </div>
@@ -77,8 +77,8 @@ export function StageDefine({ project }: StageDefineProps) {
             </CardHeader>
             <CardContent className="grid gap-5">
               <div className="grid gap-2">
-                <Label htmlFor="define-title">
-                  Titulo do Projeto <span className="text-alert">*</span>
+                <Label htmlFor="define-title" style={{ color: "#344050" }}>
+                  Titulo do Projeto <span style={{ color: "#E63757" }}>*</span>
                 </Label>
                 <Input
                   id="define-title"
@@ -91,7 +91,7 @@ export function StageDefine({ project }: StageDefineProps) {
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="define-domain">Dominio</Label>
+                <Label htmlFor="define-domain" style={{ color: "#344050" }}>Dominio</Label>
                 <select
                   id="define-domain"
                   value={domain}
@@ -100,7 +100,8 @@ export function StageDefine({ project }: StageDefineProps) {
                     save({ domain: e.target.value || undefined });
                   }}
                   disabled={saving}
-                  className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                  className="h-8 w-full rounded-md border border-input bg-transparent px-2.5 py-1 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                  style={{ borderColor: "#D8E2EF" }}
                 >
                   <option value="">Selecione um dominio...</option>
                   {DOMAINS.map((d) => (
@@ -112,7 +113,7 @@ export function StageDefine({ project }: StageDefineProps) {
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="define-target">Usuario-alvo</Label>
+                <Label htmlFor="define-target" style={{ color: "#344050" }}>Usuario-alvo</Label>
                 <Input
                   id="define-target"
                   placeholder="Ex: Estudantes universitarios de engenharia"
@@ -124,7 +125,7 @@ export function StageDefine({ project }: StageDefineProps) {
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="define-problems">Problemas</Label>
+                <Label htmlFor="define-problems" style={{ color: "#344050" }}>Problemas</Label>
                 <Textarea
                   id="define-problems"
                   placeholder="Descreva os problemas reais que o seu usuario-alvo enfrenta. Quanto mais detalhes, melhor."
@@ -147,19 +148,19 @@ export function StageDefine({ project }: StageDefineProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="border-accent/30 bg-accent/5">
+          <Card className="border-0" style={{ backgroundColor: "rgba(245, 128, 62, 0.06)", borderLeft: "3px solid #F5803E" }}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-accent">
+              <CardTitle className="flex items-center gap-2 text-sm" style={{ color: "#F5803E" }}>
                 <Lightbulb className="h-4 w-4" />
                 Dica
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{ color: "#5E6E82" }}>
                 Descreva o problema real que seu time enfrenta. Quanto mais
                 especifico, melhores serao as ideias no final.
               </p>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              <p className="mt-3 text-sm leading-relaxed" style={{ color: "#5E6E82" }}>
                 Pense no usuario como uma pessoa real &mdash; nao um segmento
                 generico. O que ela faz no dia a dia? Qual a maior frustacao
                 dela?

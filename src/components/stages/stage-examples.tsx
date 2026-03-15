@@ -16,7 +16,6 @@ import {
   ChevronDown,
   ChevronUp,
   LayoutGrid,
-  List,
 } from "lucide-react";
 import type { AiSkill, AiExample } from "@/components/kanban/project-kanban";
 
@@ -97,10 +96,10 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <Card size="sm">
+        <Card size="sm" className="aurora-card border-0">
           <CardContent className="grid gap-3 sm:grid-cols-4">
             <div className="relative sm:col-span-2">
-              <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+              <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2" style={{ color: "#5E6E82" }} />
               <Input
                 placeholder="Buscar por nome ou descricao..."
                 value={searchQuery}
@@ -111,7 +110,8 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
             <select
               value={domainFilter}
               onChange={(e) => setDomainFilter(e.target.value)}
-              className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="h-8 w-full rounded-md border bg-transparent px-2.5 py-1 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+              style={{ borderColor: "#D8E2EF", color: "#344050" }}
             >
               <option value="">Todos os dominios</option>
               {DOMAINS.map((d) => (
@@ -123,7 +123,8 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
             <select
               value={skillFilter}
               onChange={(e) => setSkillFilter(e.target.value)}
-              className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="h-8 w-full rounded-md border bg-transparent px-2.5 py-1 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+              style={{ borderColor: "#D8E2EF", color: "#344050" }}
             >
               <option value="">Todas as habilidades</option>
               {skills.map((s) => (
@@ -139,7 +140,7 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
       {/* Active filters */}
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-muted-foreground">Filtros ativos:</span>
+          <span className="text-xs" style={{ color: "#5E6E82" }}>Filtros ativos:</span>
           {capabilityFilter && (
             <Badge
               variant="secondary"
@@ -158,10 +159,11 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
             size="xs"
             onClick={clearFilters}
             className="text-xs"
+            style={{ color: "#2C7BE5" }}
           >
             Limpar filtros
           </Button>
-          <span className="ml-auto text-xs text-muted-foreground">
+          <span className="ml-auto text-xs" style={{ color: "#5E6E82" }}>
             {filteredExamples.length} de {examples.length} exemplos
           </span>
         </div>
@@ -183,24 +185,24 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
             >
               <Card
                 className={cn(
-                  "cursor-pointer transition-all hover:shadow-md",
-                  isExpanded && "ring-2 ring-primary/30"
+                  "aurora-card cursor-pointer border-0 transition-all hover:shadow-md",
+                  isExpanded && "ring-2 ring-[#2C7BE5]/30"
                 )}
                 onClick={() => setExpandedId(isExpanded ? null : example.id)}
               >
                 <CardHeader>
                   <div className="flex items-start justify-between gap-2">
-                    <CardTitle className="text-sm leading-snug">
+                    <CardTitle className="text-sm leading-snug" style={{ color: "#344050" }}>
                       {example.name}
                     </CardTitle>
                     {isExpanded ? (
-                      <ChevronUp className="h-4 w-4 shrink-0 text-muted-foreground" />
+                      <ChevronUp className="h-4 w-4 shrink-0" style={{ color: "#5E6E82" }} />
                     ) : (
-                      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+                      <ChevronDown className="h-4 w-4 shrink-0" style={{ color: "#5E6E82" }} />
                     )}
                   </div>
                   {example.domain && (
-                    <Badge variant="outline" className="w-fit text-[10px]">
+                    <Badge variant="outline" className="w-fit text-[10px]" style={{ borderColor: "#D8E2EF", color: "#5E6E82" }}>
                       {example.domain}
                     </Badge>
                   )}
@@ -209,9 +211,10 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
                 <CardContent className="grid gap-3">
                   <p
                     className={cn(
-                      "text-xs text-muted-foreground leading-relaxed",
+                      "text-xs leading-relaxed",
                       !isExpanded && "line-clamp-2"
                     )}
+                    style={{ color: "#5E6E82" }}
                   >
                     {example.description}
                   </p>
@@ -225,7 +228,7 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
                         className={cn(
                           "cursor-pointer text-[10px] transition-all hover:opacity-80",
                           SKILL_COLORS[cap] || "bg-gray-100 text-gray-700",
-                          capabilityFilter === cap && "ring-2 ring-primary/50"
+                          capabilityFilter === cap && "ring-2 ring-[#2C7BE5]/50"
                         )}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -246,10 +249,10 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <Separator className="my-2" />
+                        <Separator className="my-2" style={{ backgroundColor: "#EDF2F9" }} />
                         <div className="grid gap-2">
                           <div>
-                            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                            <p className="text-[10px] font-medium uppercase tracking-wider" style={{ color: "#5E6E82" }}>
                               Habilidades de IA utilizadas
                             </p>
                             <ul className="mt-1 grid gap-1">
@@ -260,13 +263,14 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
                                 return (
                                   <li
                                     key={cap}
-                                    className="text-xs text-foreground"
+                                    className="text-xs"
+                                    style={{ color: "#344050" }}
                                   >
                                     <span className="font-medium">
                                       {skill?.name || cap}
                                     </span>
                                     {skill && (
-                                      <span className="text-muted-foreground">
+                                      <span style={{ color: "#5E6E82" }}>
                                         {" "}
                                         &mdash; {skill.description}
                                       </span>
@@ -289,8 +293,8 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
 
       {filteredExamples.length === 0 && (
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <LayoutGrid className="mb-3 h-10 w-10 text-muted-foreground/40" />
-          <p className="text-sm text-muted-foreground">
+          <LayoutGrid className="mb-3 h-10 w-10" style={{ color: "#D8E2EF" }} />
+          <p className="text-sm" style={{ color: "#5E6E82" }}>
             Nenhum exemplo encontrado com os filtros selecionados.
           </p>
           <Button
@@ -298,6 +302,7 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
             size="sm"
             onClick={clearFilters}
             className="mt-2"
+            style={{ color: "#2C7BE5" }}
           >
             Limpar filtros
           </Button>
@@ -310,10 +315,10 @@ export function StageExamples({ examples, skills }: StageExamplesProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <Card className="border-accent/30 bg-accent/5">
+        <Card className="border-0" style={{ backgroundColor: "rgba(245, 128, 62, 0.06)", borderLeft: "3px solid #F5803E" }}>
           <CardContent className="flex items-start gap-3 pt-4">
-            <Lightbulb className="h-4 w-4 shrink-0 text-accent mt-0.5" />
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <Lightbulb className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#F5803E" }} />
+            <p className="text-sm leading-relaxed" style={{ color: "#5E6E82" }}>
               Explore exemplos fora do seu dominio &mdash; as melhores ideias
               vem de analogias inesperadas. Clique em uma habilidade para filtrar
               todos os exemplos que a utilizam.

@@ -44,22 +44,22 @@ export default async function DashboardPage() {
       : 0;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen font-open-sans" style={{ backgroundColor: "#EDF2F9", color: "#344050" }}>
       {/* Trial Banner */}
       {trialActive && (
-        <div className="border-b border-primary/20 bg-primary/5 px-4 py-2 text-center text-sm text-primary">
+        <div className="border-b px-4 py-2 text-center text-sm font-medium text-white" style={{ backgroundColor: "#2C7BE5" }}>
           Trial: {trialDays} {trialDays === 1 ? "dia restante" : "dias restantes"}
         </div>
       )}
 
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-card/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      {/* Header - Aurora style */}
+      <header className="sticky top-0 z-40 shadow-sm" style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #EDF2F9" }}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-md" style={{ backgroundColor: "#2C7BE5" }}>
+              <Sparkles className="h-5 w-5 text-white" />
             </div>
-            <h1 className="text-xl font-bold tracking-tight text-foreground">
+            <h1 className="text-xl font-semibold" style={{ color: "#344050" }}>
               Ranked
             </h1>
           </Link>
@@ -74,11 +74,14 @@ export default async function DashboardPage() {
                   referrerPolicy="no-referrer"
                 />
               ) : (
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground">
+                <div
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium text-white"
+                  style={{ backgroundColor: "#2C7BE5" }}
+                >
                   {session.user.name?.charAt(0)?.toUpperCase() || "U"}
                 </div>
               )}
-              <span className="hidden text-sm font-medium text-foreground sm:inline">
+              <span className="hidden text-sm font-medium sm:inline" style={{ color: "#344050" }}>
                 {session.user.name}
               </span>
               <form
@@ -89,7 +92,8 @@ export default async function DashboardPage() {
               >
                 <button
                   type="submit"
-                  className="ml-1 rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="ml-1 rounded-md p-1.5 transition-colors hover:bg-gray-100"
+                  style={{ color: "#5E6E82" }}
                   title="Sair"
                 >
                   <LogOut className="h-4 w-4" />
@@ -103,29 +107,30 @@ export default async function DashboardPage() {
       {/* Main Content */}
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {projects.length === 0 ? (
-          /* Empty State */
-          <div className="flex flex-col items-center justify-center py-24 text-center">
-            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10">
-              <Sparkles className="h-10 w-10 text-primary" />
+          <div className="aurora-card flex flex-col items-center justify-center py-24 text-center">
+            <div
+              className="mb-6 flex h-20 w-20 items-center justify-center rounded-xl"
+              style={{ backgroundColor: "rgba(44, 123, 229, 0.1)" }}
+            >
+              <Sparkles className="h-10 w-10" style={{ color: "#2C7BE5" }} />
             </div>
-            <h2 className="mb-2 text-2xl font-semibold text-foreground">
+            <h2 className="mb-2 text-2xl font-semibold" style={{ color: "#344050" }}>
               Nenhum projeto ainda
             </h2>
-            <p className="mb-8 max-w-md text-muted-foreground">
+            <p className="mb-8 max-w-md" style={{ color: "#5E6E82" }}>
               Crie seu primeiro projeto para comecar a jornada pelo AI Design Kit
               e transformar ideias em produtos de IA.
             </p>
             <NewProjectDialog />
           </div>
         ) : (
-          /* Project Grid */
           <div>
-            <div className="mb-6 flex items-center justify-between">
+            <div className="aurora-card mb-6 flex items-center justify-between p-4">
               <div>
-                <h2 className="text-lg font-semibold text-foreground">
+                <h2 className="text-lg font-semibold" style={{ color: "#344050" }}>
                   Seus Projetos
                 </h2>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm" style={{ color: "#5E6E82" }}>
                   {projects.length}{" "}
                   {projects.length === 1 ? "projeto" : "projetos"} em andamento
                 </p>

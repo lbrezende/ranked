@@ -181,37 +181,38 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-card/80 backdrop-blur-md">
+    <div className="flex min-h-screen flex-col font-open-sans" style={{ backgroundColor: "#EDF2F9" }}>
+      {/* Header - Aurora style */}
+      <header className="sticky top-0 z-40 shadow-sm" style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #EDF2F9" }}>
         <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/">
-            <Button variant="ghost" size="icon-sm">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="ghost" size="icon-sm" className="hover:bg-gray-100">
+              <ArrowLeft className="h-4 w-4" style={{ color: "#5E6E82" }} />
             </Button>
           </Link>
           <div className="flex flex-1 items-center gap-3 overflow-hidden">
-            <h1 className="truncate text-lg font-bold text-foreground">
+            <h1 className="truncate text-lg font-semibold" style={{ color: "#344050" }}>
               {project.title}
             </h1>
             {project.domain && (
-              <Badge variant="secondary" className="shrink-0 bg-accent/10 text-accent">
+              <Badge variant="secondary" className="shrink-0" style={{ backgroundColor: "rgba(44, 123, 229, 0.1)", color: "#2C7BE5" }}>
                 {project.domain}
               </Badge>
             )}
           </div>
-          <Badge variant="outline" className="shrink-0">
+          <Badge variant="outline" className="shrink-0" style={{ borderColor: "#2C7BE5", color: "#2C7BE5" }}>
             {STAGE_LABELS[currentStage]}
           </Badge>
         </div>
       </header>
 
       {/* Collapsible context bar */}
-      <div className="border-b border-border bg-muted/30">
+      <div className="border-b" style={{ backgroundColor: "#FFFFFF", borderColor: "#EDF2F9" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <button
             onClick={() => setContextOpen(!contextOpen)}
-            className="flex w-full items-center justify-between py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="flex w-full items-center justify-between py-2 text-sm transition-colors hover:opacity-80"
+            style={{ color: "#5E6E82" }}
           >
             <span className="font-medium">Contexto do Projeto</span>
             {contextOpen ? (
@@ -231,26 +232,26 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
               >
                 <div className="grid gap-3 pb-3 sm:grid-cols-3">
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground">
+                    <p className="text-xs font-medium" style={{ color: "#5E6E82" }}>
                       Dominio
                     </p>
-                    <p className="text-sm text-foreground">
+                    <p className="text-sm" style={{ color: "#344050" }}>
                       {project.domain || "Nao definido"}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground">
+                    <p className="text-xs font-medium" style={{ color: "#5E6E82" }}>
                       Usuario-alvo
                     </p>
-                    <p className="text-sm text-foreground">
+                    <p className="text-sm" style={{ color: "#344050" }}>
                       {project.targetUser || "Nao definido"}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground">
+                    <p className="text-xs font-medium" style={{ color: "#5E6E82" }}>
                       Problemas
                     </p>
-                    <p className="text-sm text-foreground line-clamp-3">
+                    <p className="text-sm line-clamp-3" style={{ color: "#344050" }}>
                       {project.problems || "Nao definido"}
                     </p>
                   </div>
@@ -261,8 +262,8 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
         </div>
       </div>
 
-      {/* Stage tabs */}
-      <div className="border-b border-border bg-card">
+      {/* Stage tabs - Aurora nav tab style */}
+      <div style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #EDF2F9" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-none">
             {STAGES.map((stage, index) => {
@@ -278,13 +279,20 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
                   className={cn(
                     "flex items-center gap-1.5 whitespace-nowrap rounded-md px-3 py-1.5 text-xs font-medium transition-all",
                     isCurrent &&
-                      "bg-primary text-primary-foreground shadow-sm",
+                      "text-white shadow-sm",
                     isCompleted &&
-                      "bg-success/10 text-success hover:bg-success/20",
+                      "hover:opacity-80",
                     !isCurrent &&
                       !isCompleted &&
-                      "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      "hover:bg-gray-100"
                   )}
+                  style={
+                    isCurrent
+                      ? { backgroundColor: "#2C7BE5", color: "#FFFFFF" }
+                      : isCompleted
+                        ? { backgroundColor: "rgba(0, 210, 122, 0.1)", color: "#00D27A" }
+                        : { color: "#5E6E82" }
+                  }
                 >
                   {isCompleted ? (
                     <Check className="h-3.5 w-3.5" />
@@ -301,16 +309,16 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
       </div>
 
       {/* Stage description */}
-      <div className="bg-muted/20">
+      <div style={{ backgroundColor: "rgba(44, 123, 229, 0.04)" }}>
         <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs" style={{ color: "#5E6E82" }}>
             Etapa {currentIndex + 1} de {STAGES.length} &mdash;{" "}
             {STAGE_DESCRIPTIONS[currentStage]}
           </p>
         </div>
       </div>
 
-      <Separator />
+      <Separator style={{ backgroundColor: "#EDF2F9" }} />
 
       {/* Stage content */}
       <main className="flex-1">
@@ -329,14 +337,15 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
         </div>
       </main>
 
-      {/* Bottom navigation */}
-      <div className="sticky bottom-0 border-t border-border bg-card/80 backdrop-blur-md">
+      {/* Bottom navigation - Aurora style */}
+      <div className="sticky bottom-0 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]" style={{ backgroundColor: "#FFFFFF", borderTop: "1px solid #EDF2F9" }}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Button
             variant="outline"
             onClick={handleGoBack}
             disabled={isFirst || navigating}
             className="gap-1.5"
+            style={{ borderColor: "#D8E2EF", color: "#5E6E82" }}
           >
             {navigating && !isFirst ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -346,14 +355,15 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
             Voltar
           </Button>
 
-          <span className="text-xs text-muted-foreground">
+          <span className="text-xs" style={{ color: "#5E6E82" }}>
             {currentIndex + 1} / {STAGES.length}
           </span>
 
           <Button
             onClick={handleAdvance}
             disabled={isLast || navigating}
-            className="gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90"
+            className="gap-1.5 text-white hover:opacity-90"
+            style={{ backgroundColor: "#2C7BE5" }}
           >
             Avancar
             {navigating && !isLast ? (
