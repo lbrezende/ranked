@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums (SQLite doesn't support native enums, so we use string fields) ────
+// Plan:          FREE | TRIAL | PRO
+// Stage:         DEFINE | SKILLS | EXAMPLES | ABSTRACTION | DECK | IDEAS
+// ProjectStatus: ACTIVE | COMPLETED | ARCHIVED
+
+// ─── Auth.js models ─────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  plan          String    @default("FREE") // FREE | TRIAL | PRO
+  trialEndsAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+  projects Project[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── Domain models ──────────────────────────────────────────────────────────
+
+model Project {
+  id           String   @id @default(cuid())
+  userId       String
+  title        String
+  domain       String?
+  targetUser   String?
+  problems     String?  // longer text description
+  currentStage String   @default("DEFINE") // DEFINE | SKILLS | EXAMPLES | ABSTRACTION | DECK | IDEAS
+  status       String   @default("ACTIVE") // ACTIVE | COMPLETED | ARCHIVED
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skillMarks     ProjectSkillMark[]
+  deckSelections DeckSelection[]
+  ideaCards      IdeaCard[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([currentStage])
+}
+
+model AiSkill {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String
+  synonyms    String?  // comma-separated list
+  examples    String?  // longer text
+  icon        String?
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  projectSkillMarks ProjectSkillMark[]
+}
+
+model AiExample {
+  id           String   @id @default(cuid())
+  name         String
+  description  String
+  domain       String?
+  imageUrl     String?
+  capabilities String?  // text/JSON describing which AI capabilities this example uses
+  position     Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  deckSelections DeckSelection[]
+}
+
+model ProjectSkillMark {
+  id        String   @id @default(cuid())
+  projectId String
+  aiSkillId String
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  aiSkill AiSkill @relation(fields: [aiSkillId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, aiSkillId])
+  @@index([projectId])
+  @@index([aiSkillId])
+}
+
+model DeckSelection {
+  id          String   @id @default(cuid())
+  projectId   String
+  aiExampleId String
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  aiExample AiExample @relation(fields: [aiExampleId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, aiExampleId])
+  @@index([projectId])
+  @@index([aiExampleId])
+}
+
+model IdeaCard {
+  id          String   @id @default(cuid())
+  projectId   String
+  title       String
+  description String?
+  aiSkills    String?  // text listing which AI skills this idea would use
+  votes       Int      @default(0)
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
