@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Protected routes
-  const protectedPaths = ["/projeto", "/settings"];
+  const protectedPaths = ["/projeto", "/settings", "/dashboard"];
   const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
 
   if (!isProtected) return NextResponse.next();
@@ -25,5 +25,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/projeto/:path*", "/settings/:path*"],
+  matcher: ["/projeto/:path*", "/settings/:path*", "/dashboard/:path*"],
 };
