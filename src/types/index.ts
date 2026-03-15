@@ -1,4 +1,4 @@
-export const STAGES = ["DEFINE", "SKILLS", "EXAMPLES", "ABSTRACTION", "DECK", "IDEAS"] as const;
+export const STAGES = ["DEFINE", "SKILLS", "EXAMPLES", "ABSTRACTION", "DECK", "IDEAS", "PRIORITIZE", "PRD"] as const;
 export type Stage = (typeof STAGES)[number];
 
 export const STAGE_LABELS: Record<Stage, string> = {
@@ -8,6 +8,8 @@ export const STAGE_LABELS: Record<Stage, string> = {
   ABSTRACTION: "Niveis de Abstracao",
   DECK: "Montar Deck",
   IDEAS: "Gerar Ideias",
+  PRIORITIZE: "Priorizar",
+  PRD: "Gerar PRD",
 };
 
 export const STAGE_DESCRIPTIONS: Record<Stage, string> = {
@@ -17,6 +19,8 @@ export const STAGE_DESCRIPTIONS: Record<Stage, string> = {
   ABSTRACTION: "Visualize como as capabilities se simplificam em niveis de abstracao",
   DECK: "Selecione 10 a 15 exemplos para montar seu deck de inspiracao",
   IDEAS: "Crie conceitos de produtos AI inspirados pelo seu deck e problema",
+  PRIORITIZE: "Arraste suas ideias na matriz de Impacto vs Esforco para priorizar",
+  PRD: "Gere um PRD baseado na metodologia Shape Up com a ideia escolhida",
 };
 
 export const STAGE_ICONS: Record<Stage, string> = {
@@ -26,6 +30,8 @@ export const STAGE_ICONS: Record<Stage, string> = {
   ABSTRACTION: "GitBranch",
   DECK: "Layers",
   IDEAS: "Lightbulb",
+  PRIORITIZE: "Target",
+  PRD: "FileOutput",
 };
 
 export const DOMAINS = [

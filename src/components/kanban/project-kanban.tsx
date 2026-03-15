@@ -21,6 +21,8 @@ import {
   GitBranch,
   Layers,
   Lightbulb,
+  Target,
+  FileOutput,
   Check,
 } from "lucide-react";
 import { StageDefine } from "@/components/stages/stage-define";
@@ -29,6 +31,8 @@ import { StageExamples } from "@/components/stages/stage-examples";
 import { StageAbstraction } from "@/components/stages/stage-abstraction";
 import { StageDeck } from "@/components/stages/stage-deck";
 import { StageIdeas } from "@/components/stages/stage-ideas";
+import { StagePrioritize } from "@/components/stages/stage-prioritize";
+import { StagePrd } from "@/components/stages/stage-prd";
 
 // Icon mapping for stages
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -38,6 +42,8 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   GitBranch,
   Layers,
   Lightbulb,
+  Target,
+  FileOutput,
 };
 
 // Types matching Prisma schema
@@ -89,6 +95,8 @@ interface IdeaCard {
   aiSkills: string | null;
   votes: number;
   position: number;
+  quadrant: string | null;
+  isSelected: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -107,6 +115,20 @@ export interface ProjectData {
   skillMarks: ProjectSkillMark[];
   deckSelections: DeckSelection[];
   ideaCards: IdeaCard[];
+  prd?: {
+    id: string;
+    projectId: string;
+    frame: string | null;
+    appetite: string | null;
+    solution: string | null;
+    parts: string | null;
+    rabbitHoles: string | null;
+    noGos: string | null;
+    breadboard: string | null;
+    slices: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
 }
 
 interface ProjectKanbanProps {
@@ -161,6 +183,10 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
     }
   };
 
+  const handleStageUpdate = useCallback(() => {
+    router.refresh();
+  }, [router]);
+
   const renderStage = () => {
     switch (currentStage) {
       case "DEFINE":
@@ -175,6 +201,10 @@ export function ProjectKanban({ project, skills, examples }: ProjectKanbanProps)
         return <StageDeck project={project} examples={examples} skills={skills} />;
       case "IDEAS":
         return <StageIdeas project={project} skills={skills} />;
+      case "PRIORITIZE":
+        return <StagePrioritize project={project} onUpdate={handleStageUpdate} />;
+      case "PRD":
+        return <StagePrd project={project} onUpdate={handleStageUpdate} />;
       default:
         return null;
     }

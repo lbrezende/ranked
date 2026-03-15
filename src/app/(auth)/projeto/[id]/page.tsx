@@ -22,6 +22,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       ideaCards: {
         orderBy: [{ votes: "desc" }, { createdAt: "asc" }],
       },
+      prd: true,
     },
   });
 

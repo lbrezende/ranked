@@ -82,7 +82,7 @@ model Project {
   domain       String?
   targetUser   String?
   problems     String?  // longer text description
-  currentStage String   @default("DEFINE") // DEFINE | SKILLS | EXAMPLES | ABSTRACTION | DECK | IDEAS
+  currentStage String   @default("DEFINE") // DEFINE | SKILLS | EXAMPLES | ABSTRACTION | DECK | IDEAS | PRIORITIZE | PRD
   status       String   @default("ACTIVE") // ACTIVE | COMPLETED | ARCHIVED
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -91,6 +91,7 @@ model Project {
   skillMarks     ProjectSkillMark[]
   deckSelections DeckSelection[]
   ideaCards      IdeaCard[]
+  prd            ProjectPrd?
 
   @@index([userId])
   @@index([status])
@@ -161,10 +162,29 @@ model IdeaCard {
   aiSkills    String?  // text listing which AI skills this idea would use
   votes       Int      @default(0)
   position    Int      @default(0)
+  quadrant    String?  // HIGH_IMPACT_LOW_EFFORT | HIGH_IMPACT_HIGH_EFFORT | LOW_IMPACT_LOW_EFFORT | LOW_IMPACT_HIGH_EFFORT
+  isSelected  Boolean  @default(false)  // selected for PRD generation
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId])
+}
+
+model ProjectPrd {
+  id          String   @id @default(cuid())
+  projectId   String   @unique
+  frame       String?  // Problem frame text
+  appetite    String?  // Time/scope appetite (Shape Up concept)
+  solution    String?  // Solution shape description
+  parts       String?  // JSON - parts/mechanisms list
+  rabbitHoles String?  // Known risks and unknowns
+  noGos       String?  // What is explicitly out of scope
+  breadboard  String?  // Affordance tables / breadboard
+  slices      String?  // JSON - vertical slices for implementation
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
