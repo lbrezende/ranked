@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { auth } from "@/lib/auth";
 
-function getUserId(request: Request): string {
+async function getUserId(request: Request): Promise<string> {
+  const session = await auth();
+  if (session?.user?.id) return session.user.id;
   return request.headers.get("x-user-id") || "demo-user-1";
 }
 
@@ -11,7 +14,7 @@ export async function POST(
 ) {
   try {
     const { id, ideaId } = await params;
-    const userId = getUserId(request);
+    const userId = await getUserId(request);
 
     const project = await db.project.findFirst({
       where: { id, userId },
