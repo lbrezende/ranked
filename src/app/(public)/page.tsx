@@ -27,6 +27,7 @@ import {
   ThumbsUp,
   Trophy,
 } from "lucide-react";
+import { GlowyWavesHero } from "@/components/ui/glowy-waves-hero";
 
 /* ------------------------------------------------------------------ */
 /*  Animation helpers                                                  */
@@ -865,7 +866,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background" style={{ scrollBehavior: "smooth" }}>
       <Header />
-      <HeroSection />
+      <GlowyWavesHero />
       <ProblemSection />
       <StepsSection />
       <FeaturesSection />
