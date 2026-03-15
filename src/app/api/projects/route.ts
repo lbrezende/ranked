@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { createProjectSchema } from "@/lib/validations";
+import { auth } from "@/lib/auth";
 
-function getUserId(request: Request): string {
+async function getUserId(request: Request): Promise<string> {
+  const session = await auth();
+  if (session?.user?.id) return session.user.id;
   return request.headers.get("x-user-id") || "demo-user-1";
 }
 
 export async function GET(request: Request) {
   try {
-    const userId = getUserId(request);
+    const userId = await getUserId(request);
 
     const projects = await db.project.findMany({
       where: { userId },
@@ -27,7 +30,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const userId = getUserId(request);
+    const userId = await getUserId(request);
     const body = await request.json();
 
     const parsed = createProjectSchema.safeParse(body);
