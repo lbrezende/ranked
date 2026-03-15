@@ -38,6 +38,13 @@ export async function POST(request: Request) {
       );
     }
 
+    // Ensure demo user exists
+    await db.user.upsert({
+      where: { id: userId },
+      update: {},
+      create: { id: userId, name: "Usuario Demo", email: `${userId}@demo.local` },
+    });
+
     const project = await db.project.create({
       data: {
         ...parsed.data,
