@@ -2,10 +2,16 @@
 
 import { motion, type Variants } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 import { Button } from "@/components/ui/button";
+
+const GravityWords = dynamic(
+  () => import("@/components/ui/gravity-words").then((mod) => ({ default: mod.GravityWords })),
+  { ssr: false }
+);
 
 type Point = {
   x: number;
@@ -63,6 +69,11 @@ export function GlowyWavesHero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mouseRef = useRef<Point>({ x: 0, y: 0 });
   const targetMouseRef = useRef<Point>({ x: 0, y: 0 });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -300,7 +311,13 @@ export function GlowyWavesHero() {
         <div className="absolute top-1/2 left-1/4 h-[400px] w-[400px] rounded-full bg-primary/[0.02] blur-[150px]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-6 py-24 text-center md:px-8 lg:px-12">
+      {mounted && (
+        <div className="absolute inset-0 z-20 overflow-hidden">
+          <GravityWords />
+        </div>
+      )}
+
+      <div className="relative z-30 mx-auto flex w-full max-w-6xl flex-col items-center px-6 py-24 text-center pointer-events-none md:px-8 lg:px-12">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -337,7 +354,7 @@ export function GlowyWavesHero() {
             variants={itemVariants}
             className="mb-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
-            <Link href="/login">
+            <Link href="/login" className="pointer-events-auto">
               <Button
                 size="lg"
                 className="group gap-2 rounded-full px-8 text-base"
@@ -349,7 +366,7 @@ export function GlowyWavesHero() {
                 />
               </Button>
             </Link>
-            <a href="#como-funciona">
+            <a href="#como-funciona" className="pointer-events-auto">
               <Button
                 size="lg"
                 variant="outline"
